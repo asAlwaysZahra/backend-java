@@ -6,22 +6,18 @@ public class PersonalInformation {
     private String password;
     private String about;
     private String country;
-    private String location;
-    private double lng;
-    private double lat;
+    private LocationInfo locationInfo;
     private String dob;
     private int gender;
 
-    public PersonalInformation(String name, String email, String password, String about, String country,
-                               String location, double lng, double lat, String dob, int gender) {
+    public PersonalInformation(String name, String email, String password, String about,
+                               String country, LocationInfo locationInfo, String dob, int gender) {
         this.name = name;
         this.email = email;
         this.password = password;
         this.about = about;
         this.country = country;
-        this.location = location;
-        this.lng = lng;
-        this.lat = lat;
+        this.locationInfo = locationInfo;
         this.dob = dob;
         this.gender = gender;
     }
@@ -68,28 +64,12 @@ public class PersonalInformation {
         this.country = country;
     }
 
-    public String getLocation() {
-        return location;
+    public LocationInfo getLocation() {
+        return locationInfo;
     }
 
-    public void setLocation(String location) {
-        this.location = location;
-    }
-
-    public double getLng() {
-        return lng;
-    }
-
-    public void setLng(double lng) {
-        this.lng = lng;
-    }
-
-    public double getLat() {
-        return lat;
-    }
-
-    public void setLat(double lat) {
-        this.lat = lat;
+    public void setLocation(LocationInfo locationInfo) {
+        this.locationInfo = locationInfo;
     }
 
     public String getDob() {

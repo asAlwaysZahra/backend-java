@@ -34,7 +34,6 @@ public class App {
 
         String jsonArray = Files.readString(Path.of("EmployeeData.json"));
 
-//        ObjectMapper objectMapper = new ObjectMapper();
         ObjectMapper mapper = new ObjectMapper();
         SimpleModule module = new SimpleModule();
         module.addDeserializer(Employee.class, new EmployeeDeserializer());

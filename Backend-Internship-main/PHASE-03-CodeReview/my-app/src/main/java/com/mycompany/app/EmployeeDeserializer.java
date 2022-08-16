@@ -29,13 +29,16 @@ public class EmployeeDeserializer extends StdDeserializer<Employee> {
         String password = node.get("password").asText();
         String about = node.get("about").asText();
         String country = node.get("country").asText();
+        String dob = node.get("dob").asText();
+        int gender = (Integer) node.get("gender").numberValue();
+        // location info
         String location = node.get("location").asText();
         double lng = node.get("lng").doubleValue();
         double lat = node.get("lat").doubleValue();
-        String dob = node.get("dob").asText();
-        int gender = (Integer) node.get("gender").numberValue();
+        LocationInfo loc = new LocationInfo(lng, lat, location);
+
         PersonalInformation personalInformation =
-                new PersonalInformation(name, email, password, about, country, location, lng, lat, dob, gender);
+                new PersonalInformation(name, email, password, about, country, loc, dob, gender);
 
         // Account Information -----------------------------------------------------
         int userStatus = (Integer) node.get("userStatus").numberValue();
@@ -47,13 +50,15 @@ public class EmployeeDeserializer extends StdDeserializer<Employee> {
         boolean enabletagging = node.get("enabletagging").asBoolean();
         String createdAt = node.get("createdAt").asText();
         String updatedAt = node.get("updatedAt").asText();
+        // live location info
         double livelng = node.get("livelng").doubleValue();
         double livelat = node.get("livelat").doubleValue();
         String liveLocation = node.get("liveLocation").asText();
+        LocationInfo live = new LocationInfo(livelng, livelat, liveLocation);
+
         AccountInformation accountInformation =
-                new AccountInformation(userStatus, profilePicture, coverPicture, enablefollowme,
-                        sendmenotifications, sendTextmessages, enabletagging, createdAt, updatedAt,
-                        livelng, livelat, liveLocation);
+                new AccountInformation(userStatus, profilePicture, coverPicture, enablefollowme, sendmenotifications,
+                        sendTextmessages, enabletagging, createdAt, updatedAt, live);
 
         // Employee Information -----------------------------------------------------
         int id = (Integer) node.get("id").numberValue();

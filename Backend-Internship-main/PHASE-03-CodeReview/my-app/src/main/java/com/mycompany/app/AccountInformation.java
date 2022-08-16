@@ -10,13 +10,11 @@ public class AccountInformation {
     private boolean enabletagging;
     private String createdAt;
     private String updatedAt;
-    private double livelng;
-    private double livelat;
-    private String liveLocation;
+    private LocationInfo liveLocationInfo;
 
     public AccountInformation(int userStatus, String profilePicture, String coverPicture, boolean enablefollowme,
                               boolean sendmenotifications, boolean sendTextmessages, boolean enabletagging,
-                              String createdAt, String updatedAt, double livelng, double livelat, String liveLocation) {
+                              String createdAt, String updatedAt, LocationInfo liveLocationInfo) {
         this.userStatus = userStatus;
         this.profilePicture = profilePicture;
         this.coverPicture = coverPicture;
@@ -26,9 +24,7 @@ public class AccountInformation {
         this.enabletagging = enabletagging;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
-        this.livelng = livelng;
-        this.livelat = livelat;
-        this.liveLocation = liveLocation;
+        this.liveLocationInfo = liveLocationInfo;
     }
 
     // Getters and Setters ================================================
@@ -105,27 +101,11 @@ public class AccountInformation {
         this.updatedAt = updatedAt;
     }
 
-    public double getLivelng() {
-        return livelng;
+    public LocationInfo getLiveLocation() {
+        return liveLocationInfo;
     }
 
-    public void setLivelng(double livelng) {
-        this.livelng = livelng;
-    }
-
-    public double getLivelat() {
-        return livelat;
-    }
-
-    public void setLivelat(double livelat) {
-        this.livelat = livelat;
-    }
-
-    public String getLiveLocation() {
-        return liveLocation;
-    }
-
-    public void setLiveLocation(String liveLocation) {
-        this.liveLocation = liveLocation;
+    public void setLiveLocation(LocationInfo liveLocationInfo) {
+        this.liveLocationInfo = liveLocationInfo;
     }
 }
