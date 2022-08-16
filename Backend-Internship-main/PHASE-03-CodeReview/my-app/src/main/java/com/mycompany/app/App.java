@@ -2,6 +2,7 @@ package com.mycompany.app;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 
 import java.io.File;
@@ -33,9 +34,13 @@ public class App {
 
         String jsonArray = Files.readString(Path.of("EmployeeData.json"));
 
-        ObjectMapper objectMapper = new ObjectMapper();
+//        ObjectMapper objectMapper = new ObjectMapper();
+        ObjectMapper mapper = new ObjectMapper();
+        SimpleModule module = new SimpleModule();
+        module.addDeserializer(Employee.class, new EmployeeDeserializer());
+        mapper.registerModule(module);
 
-        return objectMapper.readValue(jsonArray, new TypeReference<>() {
+        return mapper.readValue(jsonArray, new TypeReference<>() {
         });
     }
 

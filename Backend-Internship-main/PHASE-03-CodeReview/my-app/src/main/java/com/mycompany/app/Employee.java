@@ -10,6 +10,17 @@ public class Employee {
     private double creditBalance;
     private double myCash;
 
+    public Employee(PersonalInformation personalInformation, AccountInformation accountInformation,
+                    int id, String token, int userType, double creditBalance, double myCash) {
+        this.personalInformation = personalInformation;
+        this.accountInformation = accountInformation;
+        this.id = id;
+        this.token = token;
+        this.userType = userType;
+        this.creditBalance = creditBalance;
+        this.myCash = myCash;
+    }
+
     // Getters and Setters ================================================
 
     public PersonalInformation getPersonalInformation() {

@@ -7,10 +7,24 @@ public class PersonalInformation {
     private String about;
     private String country;
     private String location;
-    private int lng;
-    private int lat;
+    private double lng;
+    private double lat;
     private String dob;
     private int gender;
+
+    public PersonalInformation(String name, String email, String password, String about, String country,
+                               String location, double lng, double lat, String dob, int gender) {
+        this.name = name;
+        this.email = email;
+        this.password = password;
+        this.about = about;
+        this.country = country;
+        this.location = location;
+        this.lng = lng;
+        this.lat = lat;
+        this.dob = dob;
+        this.gender = gender;
+    }
 
     // Getters and Setters ================================================
 
@@ -62,19 +76,19 @@ public class PersonalInformation {
         this.location = location;
     }
 
-    public int getLng() {
+    public double getLng() {
         return lng;
     }
 
-    public void setLng(int lng) {
+    public void setLng(double lng) {
         this.lng = lng;
     }
 
-    public int getLat() {
+    public double getLat() {
         return lat;
     }
 
-    public void setLat(int lat) {
+    public void setLat(double lat) {
         this.lat = lat;
     }
 

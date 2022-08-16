@@ -14,6 +14,23 @@ public class AccountInformation {
     private double livelat;
     private String liveLocation;
 
+    public AccountInformation(int userStatus, String profilePicture, String coverPicture, boolean enablefollowme,
+                              boolean sendmenotifications, boolean sendTextmessages, boolean enabletagging,
+                              String createdAt, String updatedAt, double livelng, double livelat, String liveLocation) {
+        this.userStatus = userStatus;
+        this.profilePicture = profilePicture;
+        this.coverPicture = coverPicture;
+        this.enablefollowme = enablefollowme;
+        this.sendmenotifications = sendmenotifications;
+        this.sendTextmessages = sendTextmessages;
+        this.enabletagging = enabletagging;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
+        this.livelng = livelng;
+        this.livelat = livelat;
+        this.liveLocation = liveLocation;
+    }
+
     // Getters and Setters ================================================
 
     public int getUserStatus() {
