@@ -1,5 +1,11 @@
 package com.mycompany.app;
 
+import com.mycompany.app.FileClasses.ReadFile;
+import com.mycompany.app.FileClasses.WriteInFile;
+import com.mycompany.app.Models.AccountInformation;
+import com.mycompany.app.Models.Employee;
+import com.mycompany.app.Models.LocationInfo;
+import com.mycompany.app.Models.PersonalInformation;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -44,25 +50,28 @@ public class AppTest {
 
     @Test
     public void testFindFiles() {
-        assertThrows(IOException.class, () -> App.readJson("eEmployeeData.json"));
+        assertThrows(IOException.class, () -> ReadFile.readJson("eEmployeeData.json"));
     }
 
     @Test
-    public void testJsonFileFormat() throws IOException {
+    public void testJsonFileFormat() {
 
-        // false test 1
+        // false test
         assertFalse(xmlFile.getAbsolutePath().endsWith(".json"));
 
-        // true test 1
+        // true test
         assertTrue(jsonFile.getAbsolutePath().endsWith(".json"));
+    }
 
-        // false test 2
+    @Test
+    public void testValidInformation() throws IOException {
+        // false test
         String s = Files.readString(jsonFile.toPath());
         assertFalse(s.startsWith("[") && s.endsWith("]"));
 
-        // true test 2
+        // true test
         FileWriter writer = new FileWriter(jsonFile);
-        writer.write("[\n" + "    {\n" + "        \"id\": 4051,\n" + "        \"name\": \"manoj\",\n" + "    }\n" + "]");
+        writer.write("[{\"id\": 4051,\"name\": \"manoj\"}]");
         writer.close();
 
         s = Files.readString(jsonFile.toPath());
@@ -74,11 +83,11 @@ public class AppTest {
 
         this.setJsonFile();
 
-        List<Employee> employees = App.readJson(jsonFile.getPath());
+        List<Employee> employees = ReadFile.readJson(jsonFile.getPath());
         Employee em = new Employee(new PersonalInformation("manoj", "manoj@gmail.com", "Test@123", null, null, new LocationInfo(0, 0, null), null, 0), new AccountInformation(1, "Images/9b291404-bc2e-4806-88c5-08d29e65a5ad.png", "Images/44af97d9-b8c9-4ec1-a099-010671db25b7.png", false, false, false, false, "2020-01-01T11:13:27.1107739", "2020-01-02T09:16:49.284864", new LocationInfo(77.389849, 28.6282231, "Unnamed Road, Chhijarsi, Sector 63, Noida, Uttar Pradesh 201307, India")), 4051, "7f471974-ae46-4ac0-a882-1980c300c4d6", 1, 127, 0);
 
         assertEquals(employees.get(0).toString(), em.toString());
-//        assertTrue(employees.get(0).equals(em));
+//        assertEquals(employees.get(0), em);
     }
 
     @Test
@@ -86,8 +95,8 @@ public class AppTest {
 
         this.setJsonFile();
 
-        List<Employee> employees = App.readJson(jsonFile.getPath());
-        App.writeToXml(employees, xmlFile.getPath());
+        List<Employee> employees = ReadFile.readJson(jsonFile.getPath());
+        WriteInFile.writeToXml(employees, xmlFile.getPath());
         String xml = Files.readString(Path.of(xmlFile.getPath()));
 
         assertEquals(xml, "<ArrayList><item><personalInformation><name>manoj</name><email>manoj@gmail.com</email><password>Test@123</password><about>null</about><country>null</country><dob>null</dob><gender>0</gender><location><lng>0.0</lng><lat>0.0</lat><location>null</location></location></personalInformation><accountInformation><userStatus>1</userStatus><profilePicture>Images/9b291404-bc2e-4806-88c5-08d29e65a5ad.png</profilePicture><coverPicture>Images/44af97d9-b8c9-4ec1-a099-010671db25b7.png</coverPicture><enablefollowme>false</enablefollowme><sendmenotifications>false</sendmenotifications><sendTextmessages>false</sendTextmessages><enabletagging>false</enabletagging><createdAt>2020-01-01T11:13:27.1107739</createdAt><updatedAt>2020-01-02T09:16:49.284864</updatedAt><liveLocation><lng>77.389849</lng><lat>28.6282231</lat><location>Unnamed Road, Chhijarsi, Sector 63, Noida, Uttar Pradesh 201307, India</location></liveLocation></accountInformation><id>4051</id><token>7f471974-ae46-4ac0-a882-1980c300c4d6</token><userType>1</userType><creditBalance>127.0</creditBalance><myCash>0.0</myCash></item></ArrayList>");

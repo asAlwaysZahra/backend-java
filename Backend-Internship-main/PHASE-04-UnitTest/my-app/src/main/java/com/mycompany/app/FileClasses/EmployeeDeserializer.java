@@ -1,9 +1,13 @@
-package com.mycompany.app;
+package com.mycompany.app.FileClasses;
 
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
+import com.mycompany.app.Models.AccountInformation;
+import com.mycompany.app.Models.Employee;
+import com.mycompany.app.Models.LocationInfo;
+import com.mycompany.app.Models.PersonalInformation;
 
 import java.io.IOException;
 
