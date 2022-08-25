@@ -15,9 +15,11 @@ public class App {
 
         try {
 
-            List<Employee> list = ReadFile.readJson("EmployeeData.json");
+            ReadFile reader = ReadFile.getInstance();
+            List<Employee> list = reader.readJson("EmployeeData.json");
 
-            WriteInFile.writeToXml(list, "EmployeeData.xml");
+            WriteInFile writer = WriteInFile.getInstance();
+            writer.writeToXml(list, "EmployeeData.xml");
 
         } catch (IOException e) {
             e.printStackTrace();

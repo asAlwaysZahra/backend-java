@@ -10,8 +10,27 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
 
-public class ReadFile {
-    public static List<Employee> readJson(String path) throws IOException {
+public final class ReadFile {
+
+    private static ReadFile instance;
+
+    private ReadFile() {
+    }
+
+    public static ReadFile getInstance() {
+
+        if (instance != null)
+            return instance;
+
+        synchronized (ReadFile.class) {
+            if (instance == null)
+                instance = new ReadFile();
+        }
+
+        return instance;
+    }
+
+    public List<Employee> readJson(String path) throws IOException {
 
         String jsonArray = Files.readString(Path.of(path));
 

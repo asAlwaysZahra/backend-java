@@ -52,7 +52,8 @@ public class AppTest {
 
     @Test
     public void testFindFiles() {
-        assertThrows(IOException.class, () -> ReadFile.readJson("eEmployeeData.json"));
+        ReadFile reader = ReadFile.getInstance();
+        assertThrows(IOException.class, () -> reader.readJson("eEmployeeData.json"));
     }
 
     @Test
@@ -85,7 +86,8 @@ public class AppTest {
 
         this.setExampleJsonFile();
 
-        List<Employee> employees = ReadFile.readJson(jsonFile.getPath());
+        ReadFile reader = ReadFile.getInstance();
+        List<Employee> employees = reader.readJson(jsonFile.getPath());
         Employee em = new Employee(new PersonalInformation("manoj", "manoj@gmail.com", "Test@123", null, null, new LocationInfo(0, 0, null), null, 0), new AccountInformation(1, "Images/9b291404-bc2e-4806-88c5-08d29e65a5ad.png", "Images/44af97d9-b8c9-4ec1-a099-010671db25b7.png", false, false, false, false, "2020-01-01T11:13:27.1107739", "2020-01-02T09:16:49.284864", new LocationInfo(77.389849, 28.6282231, "Unnamed Road, Chhijarsi, Sector 63, Noida, Uttar Pradesh 201307, India")), 4051, "7f471974-ae46-4ac0-a882-1980c300c4d6", 1, 127, 0);
 
         assertEquals(employees.get(0).toString(), em.toString());
@@ -97,8 +99,11 @@ public class AppTest {
 
         this.setExampleJsonFile();
 
-        List<Employee> employees = ReadFile.readJson(jsonFile.getPath());
-        WriteInFile.writeToXml(employees, xmlFile.getPath());
+        ReadFile reader = ReadFile.getInstance();
+        List<Employee> employees = reader.readJson(jsonFile.getPath());
+
+        WriteInFile writer = WriteInFile.getInstance();
+        writer.writeToXml(employees, xmlFile.getPath());
         String xml = Files.readString(Path.of(xmlFile.getPath()));
 
         assertEquals(xml, "<ArrayList><item><personalInformation><name>manoj</name><email>manoj@gmail.com</email><password>Test@123</password><about>null</about><country>null</country><locationInfo><lng>0.0</lng><lat>0.0</lat><location>null</location></locationInfo><dob>null</dob><gender>0</gender></personalInformation><accountInformation><userStatus>1</userStatus><profilePicture>Images/9b291404-bc2e-4806-88c5-08d29e65a5ad.png</profilePicture><coverPicture>Images/44af97d9-b8c9-4ec1-a099-010671db25b7.png</coverPicture><enablefollowme>false</enablefollowme><sendmenotifications>false</sendmenotifications><sendTextmessages>false</sendTextmessages><enabletagging>false</enabletagging><createdAt>2020-01-01T11:13:27.1107739</createdAt><updatedAt>2020-01-02T09:16:49.284864</updatedAt><liveLocationInfo><lng>77.389849</lng><lat>28.6282231</lat><location>Unnamed Road, Chhijarsi, Sector 63, Noida, Uttar Pradesh 201307, India</location></liveLocationInfo></accountInformation><id>4051</id><token>7f471974-ae46-4ac0-a882-1980c300c4d6</token><userType>1</userType><creditBalance>127.0</creditBalance><myCash>0.0</myCash></item></ArrayList>");
