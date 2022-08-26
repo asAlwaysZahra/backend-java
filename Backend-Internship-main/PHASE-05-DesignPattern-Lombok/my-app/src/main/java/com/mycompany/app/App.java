@@ -1,11 +1,6 @@
 package com.mycompany.app;
 
-import com.mycompany.app.FileClasses.ReadFile;
-import com.mycompany.app.FileClasses.WriteInFile;
-import com.mycompany.app.Models.Employee;
-
-import java.io.IOException;
-import java.util.List;
+import com.mycompany.app.Controllers.AppController;
 
 /**
  * Hello world!
@@ -13,16 +8,8 @@ import java.util.List;
 public class App {
     public static void main(String[] args) {
 
-        try {
+        AppController controller = new AppController();
+        controller.readAndWrite();
 
-            ReadFile reader = ReadFile.getInstance();
-            List<Employee> list = reader.readJson("EmployeeData.json");
-
-            WriteInFile writer = WriteInFile.getInstance();
-            writer.writeToXml(list, "EmployeeData.xml");
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 }
