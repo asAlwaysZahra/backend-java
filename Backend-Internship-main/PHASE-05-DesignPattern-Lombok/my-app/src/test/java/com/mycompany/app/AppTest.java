@@ -88,7 +88,39 @@ public class AppTest {
 
         ReadFile reader = ReadFile.getInstance();
         List<Employee> employees = reader.readJson(jsonFile.getPath());
-        Employee em = new Employee(new PersonalInformation("manoj", "manoj@gmail.com", "Test@123", null, null, new LocationInfo(0, 0, null), null, 0), new AccountInformation(1, "Images/9b291404-bc2e-4806-88c5-08d29e65a5ad.png", "Images/44af97d9-b8c9-4ec1-a099-010671db25b7.png", false, false, false, false, "2020-01-01T11:13:27.1107739", "2020-01-02T09:16:49.284864", new LocationInfo(77.389849, 28.6282231, "Unnamed Road, Chhijarsi, Sector 63, Noida, Uttar Pradesh 201307, India")), 4051, "7f471974-ae46-4ac0-a882-1980c300c4d6", 1, 127, 0);
+
+        PersonalInformation pi = PersonalInformation.builder()
+                .name("manoj")
+                .email("manoj@gmail.com")
+                .password("Test@123")
+                .about(null)
+                .country(null)
+                .locationInfo(new LocationInfo(0, 0, null))
+                .dob(null)
+                .gender(0)
+                .build();
+
+        AccountInformation ai = AccountInformation.builder()
+                .userStatus(1)
+                .profilePicture("Images/9b291404-bc2e-4806-88c5-08d29e65a5ad.png")
+                .coverPicture("Images/44af97d9-b8c9-4ec1-a099-010671db25b7.png")
+                .enablefollowme(false)
+                .sendmenotifications(false)
+                .sendTextmessages(false)
+                .enabletagging(false).createdAt("2020-01-01T11:13:27.1107739")
+                .updatedAt("2020-01-02T09:16:49.284864")
+                .liveLocationInfo(new LocationInfo(77.389849, 28.6282231, "Unnamed Road, Chhijarsi, Sector 63, Noida, Uttar Pradesh 201307, India"))
+                .build();
+
+        Employee em = Employee.builder()
+                .personalInformation(pi)
+                .accountInformation(ai)
+                .id(4051)
+                .token("7f471974-ae46-4ac0-a882-1980c300c4d6")
+                .userType(1)
+                .creditBalance(127)
+                .myCash(0)
+                .build();
 
         assertEquals(employees.get(0).toString(), em.toString());
 //        assertEquals(employees.get(0), em);

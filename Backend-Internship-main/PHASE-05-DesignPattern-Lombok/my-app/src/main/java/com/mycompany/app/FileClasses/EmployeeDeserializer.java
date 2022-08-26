@@ -41,8 +41,16 @@ public class EmployeeDeserializer extends StdDeserializer<Employee> {
         double lat = node.get("lat").doubleValue();
         LocationInfo loc = new LocationInfo(lng, lat, location);
 
-        PersonalInformation personalInformation =
-                new PersonalInformation(name, email, password, about, country, loc, dob, gender);
+        PersonalInformation personalInformation = PersonalInformation.builder()
+                .name(name)
+                .email(email)
+                .password(password)
+                .about(about)
+                .country(country)
+                .locationInfo(loc)
+                .dob(dob)
+                .gender(gender)
+                .build();
 
         // Account Information -----------------------------------------------------
         int userStatus = (Integer) node.get("userStatus").numberValue();
@@ -60,9 +68,17 @@ public class EmployeeDeserializer extends StdDeserializer<Employee> {
         String liveLocation = node.get("liveLocation").asText();
         LocationInfo live = new LocationInfo(livelng, livelat, liveLocation);
 
-        AccountInformation accountInformation =
-                new AccountInformation(userStatus, profilePicture, coverPicture, enablefollowme, sendmenotifications,
-                        sendTextmessages, enabletagging, createdAt, updatedAt, live);
+        AccountInformation accountInformation = AccountInformation.builder()
+                .userStatus(userStatus)
+                .profilePicture(profilePicture)
+                .coverPicture(coverPicture)
+                .enablefollowme(enablefollowme)
+                .sendmenotifications(sendmenotifications)
+                .sendTextmessages(sendTextmessages)
+                .enabletagging(enabletagging).createdAt(createdAt)
+                .updatedAt(updatedAt)
+                .liveLocationInfo(live)
+                .build();
 
         // Employee Information -----------------------------------------------------
         int id = (Integer) node.get("id").numberValue();
@@ -71,6 +87,14 @@ public class EmployeeDeserializer extends StdDeserializer<Employee> {
         double creditBalance = node.get("creditBalance").doubleValue();
         double myCash = node.get("myCash").doubleValue();
 
-        return new Employee(personalInformation, accountInformation, id, token, userType, creditBalance, myCash);
+        return Employee.builder()
+                .personalInformation(personalInformation)
+                .accountInformation(accountInformation)
+                .id(id)
+                .token(token)
+                .userType(userType)
+                .creditBalance(creditBalance)
+                .myCash(myCash)
+                .build();
     }
 }

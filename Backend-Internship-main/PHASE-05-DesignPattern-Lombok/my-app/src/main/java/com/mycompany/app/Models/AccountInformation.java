@@ -1,10 +1,10 @@
 package com.mycompany.app.Models;
 
-import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 
 @Data
-@AllArgsConstructor
+@Builder
 public class AccountInformation {
 
     private int userStatus;
