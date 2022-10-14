@@ -6,7 +6,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.util.Set;
 
 @Data
 @Builder
@@ -16,17 +15,12 @@ import java.util.Set;
 @Entity
 public class Student {
     @Id
-    private int studentID;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "student_id")
+    private int studentId;
     private String name;
-    private int favCourseID;
+    @Column(name = "fav_course_id")
+    private int favCourseId;
     private boolean isOnProbation;
     private double gpa;
-
-    @ManyToMany
-    @JoinTable(
-            name = "student_course",
-            joinColumns = @JoinColumn(name = "studentID"),
-            inverseJoinColumns = @JoinColumn(name = "courseID")
-    )
-    Set<Course> courses;
 }

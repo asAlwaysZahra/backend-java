@@ -1,30 +1,34 @@
 package com.example.demo.service;
 
 import com.example.demo.model.Course;
+import com.example.demo.model.request.CourseRequest;
+import com.example.demo.model.response.CourseAvgResponse;
+import com.example.demo.model.response.CourseFavCountResponse;
 import com.example.demo.repository.CourseRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.example.demo.repository.ScoreRepository;
+import com.example.demo.repository.StudentRepository;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
 
 @Service
+@AllArgsConstructor
 public class CourseServiceImpl implements CourseService {
 
-    @Autowired
     private CourseRepository courseRepository;
+    private ScoreRepository scoreRepository;
+    private StudentRepository studentRepository;
 
     @Override
-    public Course getCourse(int id) {
-        Optional<Course> course= courseRepository.findById(id);
-        if (course.isEmpty()) return null;
-        return course.get();
-    }
+    public Course saveCourse(CourseRequest course) {
+        Course created = Course.builder()
+                .name(course.getName())
+                .capacity(course.getCapacity())
+                .build();
 
-    @Override
-    public Course saveCourse(Course course) {
-        return courseRepository.save(course);
+        return courseRepository.save(created);
     }
 
     @Override
@@ -33,19 +37,29 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
-    public Course updateCourse(Course course, Integer courseId) {
-        Course depDB = courseRepository.findById(courseId).get();
+    public Course updateCourse(CourseRequest course, Integer courseId) {
+        Course crs = courseRepository.findById(courseId).orElseThrow();
 
-        if (Objects.nonNull(course.getName()) && !"".equalsIgnoreCase(course.getName()))
-            depDB.setName(course.getName());
+        if (Objects.nonNull(course.getName()) && !course.getName().isEmpty())
+            crs.setName(course.getName());
 
-        depDB.setCapacity(course.getCapacity());
+        crs.setCapacity(course.getCapacity());
 
-        return courseRepository.save(depDB);
+        return courseRepository.save(crs);
     }
 
     @Override
     public void deleteCourseById(Integer courseId) {
         courseRepository.deleteById(courseId);
+    }
+
+    @Override
+    public CourseAvgResponse getAvgScore(Integer courseId) {
+        return new CourseAvgResponse(courseId, scoreRepository.getScoreAverage(courseId));
+    }
+
+    @Override
+    public CourseFavCountResponse getFavCount(Integer courseId) {
+        return new CourseFavCountResponse(courseId, studentRepository.getFavCourseCount(courseId));
     }
 }

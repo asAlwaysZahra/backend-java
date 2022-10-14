@@ -9,15 +9,24 @@ import javax.persistence.*;
 
 @Data
 @Builder
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 @Table
 @Entity
-public class Course {
+public class Score {
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "course_id")
-    private int courseId;
-    private String name;
-    private int capacity;
+    int id;
+
+    @ManyToOne
+    @JoinColumn(name = "student_id")
+    Student student;
+
+    @ManyToOne
+    @JoinColumn(name = "course_id")
+    Course course;
+
+    double score;
+
 }

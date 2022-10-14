@@ -13,15 +13,18 @@ import java.util.Set;
 @Table
 @Entity
 public class Professor {
+
     @Id
-    private int professorID;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "professor_id")
+    private int professorId;
     private String name;
 
     @ManyToMany
     @JoinTable(
             name = "professor_course",
-            joinColumns = @JoinColumn(name = "professorID"),
-            inverseJoinColumns = @JoinColumn(name = "courseID")
+            joinColumns = @JoinColumn(name = "professor_Id"),
+            inverseJoinColumns = @JoinColumn(name = "course_Id")
     )
     Set<Course> courses;
 }

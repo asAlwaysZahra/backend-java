@@ -1,8 +1,15 @@
 package com.example.demo.service;
 
+import com.example.demo.model.Course;
+import com.example.demo.model.Score;
 import com.example.demo.model.Student;
+import com.example.demo.model.request.StudentRequest;
+import com.example.demo.model.response.RegisterCourseResponse;
+import com.example.demo.model.response.ScoreResponse;
+import com.example.demo.repository.CourseRepository;
+import com.example.demo.repository.ScoreRepository;
 import com.example.demo.repository.StudentRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -10,21 +17,31 @@ import java.util.Objects;
 import java.util.Optional;
 
 @Service
+@AllArgsConstructor
 public class StudentServiceImpl implements StudentService {
 
-    @Autowired
     private StudentRepository studentRepository;
+    private CourseRepository courseRepository;
+    private ScoreRepository scoreRepository;
 
     @Override
     public Student getStudent(int id) {
-        Optional<Student> student= studentRepository.findById(id);
+        Optional<Student> student = studentRepository.findById(id);
         if (student.isEmpty()) return null;
         return student.get();
     }
 
     @Override
-    public Student saveStudent(Student student) {
-        return studentRepository.save(student);
+    public Student saveStudent(StudentRequest student) {
+
+        Student created = Student.builder()
+                .name(student.getName())
+                .favCourseId(student.getFavCourseId())
+                .gpa(student.getGpa())
+                .isOnProbation(student.isOnProbation())
+                .build();
+
+        return studentRepository.save(created);
     }
 
     @Override
@@ -33,22 +50,57 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public Student updateStudent(Student student, Integer studentId) {
-        Student depDB = studentRepository.findById(studentId).get();
+    public Student updateStudent(StudentRequest student, Integer studentId) {
 
-        if (Objects.nonNull(student.getName()) && !"".equalsIgnoreCase(student.getName()))
-            depDB.setName(student.getName());
+        Student stu = studentRepository.findById(studentId).orElseThrow();
 
-        depDB.setStudentID(student.getStudentID());
-        depDB.setGpa(student.getGpa());
-        depDB.setOnProbation(student.isOnProbation());
-        depDB.setFavCourseID(student.getFavCourseID());
+        if (Objects.nonNull(student.getName()) && !student.getName().isEmpty())
+            stu.setName(student.getName());
 
-        return studentRepository.save(depDB);
+        stu.setGpa(student.getGpa());
+        stu.setOnProbation(student.isOnProbation());
+        stu.setFavCourseId(student.getFavCourseId());
+
+        return studentRepository.save(stu);
     }
 
     @Override
     public void deleteStudentById(Integer studentId) {
         studentRepository.deleteById(studentId);
+    }
+
+    @Override
+    public RegisterCourseResponse register(Integer studentId, Integer courseId) {
+        Optional<Course> course = courseRepository.findById(courseId);
+        Optional<Student> student = studentRepository.findById(studentId);
+
+        scoreRepository.save(Score.builder()
+                .course(course.orElseThrow())
+                .student(student.orElseThrow())
+                .build());
+
+        return new RegisterCourseResponse(studentId, courseId);
+    }
+
+    @Override
+    public ScoreResponse getCourseScore(Integer studentId, Integer courseId) {
+        Optional<Course> course = courseRepository.findById(courseId);
+        Optional<Student> student = studentRepository.findById(studentId);
+
+        Score score = scoreRepository.findByStudentAndCourse(student.orElseThrow().getStudentId(),
+                course.orElseThrow().getCourseId());
+
+        return ScoreResponse.builder()
+                .studentId(score.getStudent().getStudentId())
+                .courseId(score.getCourse().getCourseId())
+                .score(score.getScore())
+                .build();
+    }
+
+    @Override
+    public void deleteCourse(int studentId, int courseId) {
+        Score score = scoreRepository.findByStudentAndCourse(studentId, courseId);
+        System.out.println(score);
+        scoreRepository.delete(score);
     }
 }
