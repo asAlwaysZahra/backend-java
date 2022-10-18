@@ -52,7 +52,7 @@ public class StudentController {
     }
 
     // Delete course
-    @PutMapping("/students/{studentId}/delete/{courseId}")
+    @DeleteMapping("/students/{studentId}/delete/{courseId}")
     public ResponseEntity<Void> deleteCourse(@PathVariable("studentId") Integer studentId,
                                              @PathVariable("courseId") Integer courseId) {
         studentService.deleteCourse(studentId, courseId);

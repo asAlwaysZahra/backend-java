@@ -1,5 +1,6 @@
 package com.example.demo.model;
 
+import com.example.demo.model.request.CourseRequest;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -20,4 +21,8 @@ public class Course {
     private int courseId;
     private String name;
     private int capacity;
+
+    public CourseRequest request() {
+        return new CourseRequest(name, capacity);
+    }
 }

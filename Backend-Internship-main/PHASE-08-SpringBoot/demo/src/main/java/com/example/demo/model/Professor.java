@@ -1,6 +1,8 @@
 package com.example.demo.model;
 
+import com.example.demo.model.request.ProfessorRequest;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -8,6 +10,7 @@ import javax.persistence.*;
 import java.util.Set;
 
 @Data
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @Table
@@ -26,5 +29,9 @@ public class Professor {
             joinColumns = @JoinColumn(name = "professor_Id"),
             inverseJoinColumns = @JoinColumn(name = "course_Id")
     )
-    Set<Course> courses;
+    private Set<Course> courses;
+
+    public ProfessorRequest request() {
+        return new ProfessorRequest(name);
+    }
 }

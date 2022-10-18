@@ -25,15 +25,7 @@ public class StudentServiceImpl implements StudentService {
     private ScoreRepository scoreRepository;
 
     @Override
-    public Student getStudent(int id) {
-        Optional<Student> student = studentRepository.findById(id);
-        if (student.isEmpty()) return null;
-        return student.get();
-    }
-
-    @Override
     public Student saveStudent(StudentRequest student) {
-
         Student created = Student.builder()
                 .name(student.getName())
                 .favCourseId(student.getFavCourseId())
@@ -100,7 +92,6 @@ public class StudentServiceImpl implements StudentService {
     @Override
     public void deleteCourse(int studentId, int courseId) {
         Score score = scoreRepository.findByStudentAndCourse(studentId, courseId);
-        System.out.println(score);
         scoreRepository.delete(score);
     }
 }

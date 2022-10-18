@@ -9,8 +9,6 @@ import java.util.List;
 
 public interface StudentService {
 
-    Student getStudent(int id);
-
     Student saveStudent(StudentRequest student);
 
     List<Student> fetchStudentList();

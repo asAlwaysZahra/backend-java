@@ -1,5 +1,6 @@
 package com.example.demo.model;
 
+import com.example.demo.model.request.StudentRequest;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -23,4 +24,8 @@ public class Student {
     private int favCourseId;
     private boolean isOnProbation;
     private double gpa;
+
+    public StudentRequest request() {
+        return new StudentRequest(name, favCourseId, isOnProbation, gpa);
+    }
 }
